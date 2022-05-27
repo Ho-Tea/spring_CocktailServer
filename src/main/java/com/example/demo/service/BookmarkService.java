@@ -1,34 +1,33 @@
 
 package com.example.demo.service;
 
-import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.model.TodoEntity;
-import com.example.demo.persistence.TodoRepository;
+import com.example.demo.model.BookmarkEntity;
+import com.example.demo.persistence.BookmarkRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @Service
-public class TodoService {
+public class BookmarkService {
 
 	@Autowired
-	private TodoRepository repository;
+	private BookmarkRepository repository;
 
 	public String testService() {
 		// TodoEntity 생성
-		TodoEntity entity = TodoEntity.builder().title("My first todo item").build();
+		BookmarkEntity entity = BookmarkEntity.builder().Bookmark("My first todo item").build();
 		// TodoEntity 저장
 		repository.save(entity);
 		// TodoEntity 검색
-		TodoEntity savedEntity = repository.findById(entity.getId()).get();
-		return savedEntity.getTitle();
+		BookmarkEntity savedEntity = repository.findById(entity.getId()).get();
+		return savedEntity.getBookmark();
 	}
 
-	public List<TodoEntity> create(final TodoEntity entity) {
+	public List<BookmarkEntity> create(final BookmarkEntity entity) {
 		// Validations
 		validate(entity);
 
@@ -37,7 +36,7 @@ public class TodoService {
 		return repository.findByUserId(entity.getUserId());
 	}
 
-	private void validate(final TodoEntity entity) {
+	private void validate(final BookmarkEntity entity) {
 		if(entity == null) {
 			log.warn("Entity cannot be null.");
 			throw new RuntimeException("Entity cannot be null.");
@@ -49,22 +48,22 @@ public class TodoService {
 		}
 	}
 
-	public List<TodoEntity> retrieve(final String userId) {
+	public List<BookmarkEntity> retrieve(final String userId) {
 		return repository.findByUserId(userId);
 	}
 
-	public List<TodoEntity> update(final TodoEntity entity) {
+	public List<BookmarkEntity> update(final BookmarkEntity entity) {
 		// (1) 저장 할 엔티티가 유효한지 확인한다. 이 메서드는 2.3.1 Create Todo에서 구현했다.
 		validate(entity);
 
 		// (2) 넘겨받은 엔티티 id를 이용해 TodoEntity를 가져온다. 존재하지 않는 엔티티는 업데이트 할 수 없기 때문이다.
-		final Optional<TodoEntity> original = repository.findById(entity.getId());
+		final Optional<BookmarkEntity> original = repository.findById(entity.getId());
 
 
 
 		original.ifPresent(todo -> {
 			// (3) 반환된 TodoEntity가 존재하면 값을 새 entity의 값으로 덮어 씌운다.
-			todo.setTitle(entity.getTitle());
+			todo.setBookmark(entity.getBookmark());
 			todo.setDone(entity.isDone());
 
 			// (4) 데이터베이스에 새 값을 저장한다.
@@ -76,7 +75,7 @@ public class TodoService {
 	}
 
 
-	public List<TodoEntity> delete(final TodoEntity entity) {
+	public List<BookmarkEntity> delete(final BookmarkEntity entity) {
 		// (1) 저장 할 엔티티가 유효한지 확인한다. 이 메서드는 2.3.1 Create Todo에서 구현했다.
 		validate(entity);
 

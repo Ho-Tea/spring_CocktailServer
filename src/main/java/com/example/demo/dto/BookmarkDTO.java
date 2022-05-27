@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.TodoEntity;
+import com.example.demo.model.BookmarkEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,23 +8,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class TodoDTO {
+public class BookmarkDTO {
 	private String id;
-	private String title;
+	private String Bookmark;
 	private boolean done;
 
-	public TodoDTO(final TodoEntity entity) {
+	public BookmarkDTO(final BookmarkEntity entity) {
 		this.id = entity.getId();
-		this.title = entity.getTitle();
+		this.Bookmark = entity.getBookmark();
 		this.done = entity.isDone();
 	}
 
-	public static TodoEntity toEntity(final TodoDTO dto) {
-		return TodoEntity.builder()
+	public static BookmarkEntity toEntity(final BookmarkDTO dto) {
+		return BookmarkEntity.builder()
 						.id(dto.getId())
-						.title(dto.getTitle())
+						.Bookmark(dto.getBookmark())
 						.done(dto.isDone())
 						.build();
+
 	}
 }
 

@@ -16,13 +16,13 @@ import org.hibernate.annotations.GenericGenerator;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "Todo")
-public class TodoEntity {
+@Table(name = "bookmarks")
+public class BookmarkEntity {
 	@Id
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private String userId;
-	private String title;
+	private String Bookmark;
 	private boolean done;
 }
