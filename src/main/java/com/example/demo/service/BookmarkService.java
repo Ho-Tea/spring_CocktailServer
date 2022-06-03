@@ -18,11 +18,11 @@ public class BookmarkService {
 	private BookmarkRepository repository;
 
 	public String testService() {
-		// TodoEntity 생성
+		// bookmarkEntity 생성
 		BookmarkEntity entity = BookmarkEntity.builder().Bookmark("My first todo item").build();
-		// TodoEntity 저장
+		// bookmarkEntity 저장
 		repository.save(entity);
-		// TodoEntity 검색
+		// bookmarkEntity 검색
 		BookmarkEntity savedEntity = repository.findById(entity.getId()).get();
 		return savedEntity.getBookmark();
 	}
@@ -53,16 +53,16 @@ public class BookmarkService {
 	}
 
 	public List<BookmarkEntity> update(final BookmarkEntity entity) {
-		// (1) 저장 할 엔티티가 유효한지 확인한다. 이 메서드는 2.3.1 Create Todo에서 구현했다.
+		// (1) 저장 할 엔티티가 유효한지 확인한다. 이 메서드는 2.3.1 Create bookmark에서 구현했다.
 		validate(entity);
 
-		// (2) 넘겨받은 엔티티 id를 이용해 TodoEntity를 가져온다. 존재하지 않는 엔티티는 업데이트 할 수 없기 때문이다.
+		// (2) 넘겨받은 엔티티 id를 이용해 bookmarkEntity를 가져온다. 존재하지 않는 엔티티는 업데이트 할 수 없기 때문이다.
 		final Optional<BookmarkEntity> original = repository.findById(entity.getId());
 
 
 
 		original.ifPresent(todo -> {
-			// (3) 반환된 TodoEntity가 존재하면 값을 새 entity의 값으로 덮어 씌운다.
+			// (3) 반환된 bookmarkEntity가 존재하면 값을 새 entity의 값으로 덮어 씌운다.
 			todo.setBookmark(entity.getBookmark());
 			todo.setDone(entity.isDone());
 
@@ -70,13 +70,13 @@ public class BookmarkService {
 			repository.save(todo);
 		});
 
-		// 2.3.2 Retrieve Todo에서 만든 메서드를 이용해 유저의 모든 Todo 리스트를 리턴한다.
+		// 2.3.2 Retrieve bookmark에서 만든 메서드를 이용해 유저의 모든 bookmark 리스트를 리턴한다.
 		return retrieve(entity.getUserId());
 	}
 
 
 	public List<BookmarkEntity> delete(final BookmarkEntity entity) {
-		// (1) 저장 할 엔티티가 유효한지 확인한다. 이 메서드는 2.3.1 Create Todo에서 구현했다.
+		// (1) 저장 할 엔티티가 유효한지 확인한다. 이 메서드는 2.3.1 Create bookmark에서 구현했다.
 		validate(entity);
 
 		try {
@@ -89,7 +89,7 @@ public class BookmarkService {
 			// (4) 컨트롤러로 exception을 날린다. 데이터베이스 내부 로직을 캡슐화 하기 위해 e를 리턴하지 않고 새 exception 오브젝트를 리턴한다.
 			throw new RuntimeException("error deleting entity " + entity.getId());
 		}
-		// (5) 새 Todo리스트를 가져와 리턴한다.
+		// (5) 새 bookmark리스트를 가져와 리턴한다.
 		return retrieve(entity.getUserId());
 	}
 
